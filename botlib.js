@@ -192,7 +192,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
            // ojo debo llamar a rutina que me entrega los datos personales, yo le paso el telefono
       
-    query({"question": vpregunta,"overrideConfig": {"sessionId": "ssssssss","systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+    query({"question": vpregunta,"overrideConfig": {"sessionId": "dbdbdbd","systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
 	    cargarRespuesta(response.text,vcontextobj)
 	   console.log(response);
     });	 
