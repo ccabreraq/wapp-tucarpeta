@@ -218,7 +218,7 @@ router.post('/orquestador', function(req, res) {
     // paso la pregunta al clasificador contextual y devuelvo una categoria // tener en cuanta que si lo que recibo del cliente es una pregunta o una respuesta a una pregunta que hace el bot
     // devuelvo la api a llamr o el metodo a llamar y lo entrego a la rutina de pregunta
    
-    clasifica({"messages": [{"content": pregunta}],"uid":"aaa" }).then((response) => {
+    clasifica({"messages": [{"content": pregunta}],"uid":"aaa","datos_personales":resp_men.datos_personales }).then((response) => {
         console.log(response)
         // saca url
         if (response === "no_permitido" || response == null) {
