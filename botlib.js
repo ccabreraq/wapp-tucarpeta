@@ -227,7 +227,7 @@ router.post('/orquestador', function(req, res) {
         } else {
             let def_url = response.split("|");
             //query({"question": pregunta,"overrideConfig": {"sessionId": sessionId}},boturlapi1).then((response) => {
-            query({"question": pregunta,"overrideConfig":{"qdrantCollection":{"qdrant_0":"axa"},"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales:  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},def_url[1]).then((response1) => {
+            query({"question": pregunta,"overrideConfig":{"sessionId": sessionId,"qdrantCollection":{"qdrant_0":"axa"},"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales:  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},def_url[1]).then((response1) => {
                 res.status(200).send(response1) 	
             console.log(response1);
             });	 
