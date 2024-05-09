@@ -251,6 +251,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         let image_url = resp_men.payload.payload.url
         let image_contentType = resp_men.payload.payload.contentType
+        let image_texto = resp_men.payload.payload.caption
 
         let image_url1 = image_url.replace("?download=false", "");
 
@@ -261,7 +262,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             console.log(data_image);
 
             query_audio({
-                "question": "Can you describe the image?",
+                "question": image_texto,
                 "uploads": [
                     {
                         "data": data_image, //base64 string
