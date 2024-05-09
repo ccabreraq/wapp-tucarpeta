@@ -95,6 +95,22 @@ const query =async function(data,boturlapi) {
     return result;
 }
 
+const query_audio =async function(data,boturlapi) {
+    //async function query(data,boturlapi) {
+        // dependiendo de la categria se sabe la url que hay que llamar, ya sea porque la rutina la devuelve o porque lo averigua aca (boturl)
+        const response = await fetch(boturlapi,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+        const result = await response.json();
+        return result;
+}
+
 const clasifica =async function(data) {
     //async function query(data,boturlapi) {
         // dependiendo de la categria se sabe la url que hay que llamar, ya sea porque la rutina la devuelve o porque lo averigua aca (boturl)
@@ -203,6 +219,36 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         let audio_url = resp_men.payload.payload.url
         let audio_contentType = resp_men.payload.payload.contentType
+
+        let audio_url1 = audio_url.replace("?download=false", "");
+
+        async function fetchBlob(url) {
+            const response = await fetch(url);
+            let data_audio = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(body).toString('base64');
+            console.log(data_audio);
+
+            query_audio({
+                "uploads": [
+                    {
+                        "data": data_audio, //base64 string
+                        "type": 'audio',
+                        "name": 'audio.wav',
+                        "mime": response.headers["content-type"]
+                    }
+                ]
+            }).then((response_audio) => {
+                cargarRespuesta(response_audio.text,vcontextobj)
+                console.log(response_audio);
+            });    
+    
+    
+        
+            //return response.blob();
+            return data;
+        }
+
+        fetchBlob(audio_url1)
+
 
       }  else if (resp_men.payload.type ==='image') {
 
