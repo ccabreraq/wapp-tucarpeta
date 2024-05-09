@@ -224,7 +224,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         async function fetchBlob(url) {
             const response = await fetch(url);
-            let data_audio = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(body).toString('base64');
+            let data_audio = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(response.body).toString('base64');
             console.log(data_audio);
 
             query_audio({
