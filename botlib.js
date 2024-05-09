@@ -241,14 +241,10 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                     }
                 ]
             }).then((response_audio) => {
-                cargarRespuesta(response_audio.text,vcontextobj)
                 console.log(response_audio);
+                cargarRespuesta(response_audio.text,vcontextobj)
             });    
-    
-    
         
-            //return response.blob();
-            return data;
         }
 
         fetchBlob(audio_url1)
