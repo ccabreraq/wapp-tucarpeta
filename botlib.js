@@ -224,9 +224,6 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         async function fetchBlob(url) {
             const response = await fetch(url);
-            //let data_audio = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(response.body).toString('base64');
-            //console.log(data_audio);
-
             const blob = await response.arrayBuffer();
             let data_audio = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
             console.log(data_audio);
@@ -254,6 +251,35 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         let image_url = resp_men.payload.payload.url
         let image_contentType = resp_men.payload.payload.contentType
+
+        let image_url1 = image_url.replace("?download=false", "");
+
+        async function fetchBlob(url) {
+            const response = await fetch(url);
+            const blob1 = await response.arrayBuffer();
+            let data_image = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob1).toString("base64")}`;
+            console.log(data_image);
+
+            query_audio({
+                "question": "Can you describe the image?",
+                "uploads": [
+                    {
+                        "data": data_image, //base64 string
+                        "type": 'file',
+                        "name": 'Flowise.jpg',
+                        "mime": image_contentType
+                    }
+                ]
+                },process.env.FLOW_INICIAL).then((response_image) => {
+                console.log(response_image);
+                //cargarRespuesta(response_audio.text,vcontextobj)
+            });    
+        
+        }
+
+        fetchBlob(image_url1)
+
+
       }
 
     }  else { 
