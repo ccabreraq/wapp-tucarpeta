@@ -240,7 +240,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                         "mime": audio_contentType
                     }
                 ]
-            }).then((response_audio) => {
+            },process.env.FLOW_INICIAL).then((response_audio) => {
                 console.log(response_audio);
                 cargarRespuesta(response_audio.text,vcontextobj)
             });    
