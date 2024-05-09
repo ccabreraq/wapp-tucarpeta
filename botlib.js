@@ -192,15 +192,24 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
            // ojo debo llamar a rutina que me entrega los datos personales, yo le paso el telefono
       
-    //query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-    query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+      //query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+      query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
 	    cargarRespuesta(response.text,vcontextobj)
 	   console.log(response);
-    });	 
+      });	 
 
 
-      
-    } else { 
+    }  else if (resp_men.type ==='audio') {  
+
+        let audio_url = resp_men.payload.url
+        let audio_contentType = resp_men.payload.contentType
+
+    }  else if (resp_men.type ==='image') {
+
+        let image_url = resp_men.payload.url
+        let image_contentType = resp_men.payload.contentType
+
+    }  else { 
        //console.log(resp_men)	
     }
 
