@@ -179,9 +179,6 @@ router.post('/modo_whatsapp_v3', function(req, res) {
       var vcontextobj = {botname: "AAAA",channeltype: "whatsapp",phone:resp_men.payload.sender.phone,contextid: "whatsapp:"+resp_men.payload.sender.phone,contexttype: "p2p"}
       var vsenderobj = {channelid:"whatsapp:"+resp_men.payload.sender.phone+'"',channeltype:'whatsapp',display:resp_men.payload.sender.name}
       var vmessageobj =  {text:resp_men.payload.payload.text,type:'msg'}
-      var vpregunta = resp_men.payload.payload.text
-      var vtipo = resp_men.payload.type
-      var dusuario_estado = "visitante";
 
       let categoria
 
@@ -191,23 +188,27 @@ router.post('/modo_whatsapp_v3', function(req, res) {
       console.log(resp_men)
 
            // ojo debo llamar a rutina que me entrega los datos personales, yo le paso el telefono
+
+      if (resp_men.payload.type ==='text') {      
       
-      //query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-      query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-	    cargarRespuesta(response.text,vcontextobj)
-	   console.log(response);
-      });	 
+        var vpregunta = resp_men.payload.payload.text
+        //query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+        query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+            cargarRespuesta(response.text,vcontextobj)
+        console.log(response);
+        });	 
 
 
-    }  else if (resp_men.type ==='audio') {  
+      }  else if (resp_men.payload.type ==='audio') {  
 
-        let audio_url = resp_men.payload.url
-        let audio_contentType = resp_men.payload.contentType
+        let audio_url = resp_men.payload.payload.url
+        let audio_contentType = resp_men.payload.payload.contentType
 
-    }  else if (resp_men.type ==='image') {
+      }  else if (resp_men.payload.type ==='image') {
 
-        let image_url = resp_men.payload.url
-        let image_contentType = resp_men.payload.contentType
+        let image_url = resp_men.payload.payload.url
+        let image_contentType = resp_men.payload.payload.contentType
+      }
 
     }  else { 
        //console.log(resp_men)	
