@@ -273,7 +273,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                 ]
                 },process.env.FLOW_INICIAL).then((response_image) => {
                 console.log(response_image);
-                //cargarRespuesta(response_audio.text,vcontextobj)
+                cargarRespuesta(response_image.text,vcontextobj)
             });    
         
         }
