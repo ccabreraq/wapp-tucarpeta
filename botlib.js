@@ -227,13 +227,14 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             //let data_audio = "data:" + response.headers["content-type"] + ";base64," + Buffer.from(response.body).toString('base64');
             //console.log(data_audio);
 
-            const blob = await response.arrayBuffer(); return `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
-            console.log(blob);
+            const blob = await response.arrayBuffer();
+            let data_audio = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
+            console.log(data_audio);
 
             query_audio({
                 "uploads": [
                     {
-                        "data": blob, //base64 string
+                        "data": data_audio, //base64 string
                         "type": 'audio',
                         "name": 'audio.wav',
                         "mime": audio_contentType
