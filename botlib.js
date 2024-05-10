@@ -251,7 +251,9 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             const response = await fetch(url);
             const blob = await response.arrayBuffer();
 
-            const fconver = getBlobFromBase64Data(Buffer.from(blob).toString("base64"), 'wav',512)
+            const base_ori = await Buffer.from(blob).toString("base64")
+
+            const fconver = await getBlobFromBase64Data(base_ori, 'wav',512)
             let data_audio = await `data:audio/webm;base64,${Buffer.from(fconver).toString("base64")}`;
             console.log(data_audio);
 
