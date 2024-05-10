@@ -7,6 +7,7 @@ var EventEmitter2 = require('eventemitter2');
 var emitter= new EventEmitter2();
 const dotenv = require('dotenv').config()
 
+
 ////////////////// variables del bot //////////////////////////////
 const source = '573143285974'
 const botname = 'veseguro'
@@ -125,7 +126,31 @@ const clasifica =async function(data) {
         );
         const result = await response.json();
         return result;
+}
+
+const getBlobFromBase64Data = function(base64Data, contentType, sliceSize = 512) {
+    let byteCharacters;
+    if (typeof window !== "undefined") {
+      // Client-side
+      byteCharacters = atob(base64Data);
+    } else {
+      // Node.js
+      byteCharacters = Buffer.from(base64Data, "base64").toString("binary");
     }
+  
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
     
 ////////////////////////////////////////////////////////
 ///////////// metodos api ////////////////////////////
@@ -225,16 +250,21 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         async function fetchBlob(url) {
             const response = await fetch(url);
             const blob = await response.arrayBuffer();
-            let data_audio = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
+
+            const fconver = getBlobFromBase64Data(Buffer.from(blob).toString("base64"), 'wav',512)
+            let data_audio = await `data:audio/webm;base64,${fconver}`;
             console.log(data_audio);
+
+            //let data_audio = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob).toString("base64")}`;
+            //console.log(data_audio);
 
             query_audio({
                 "uploads": [
                     {
                         "data": data_audio, //base64 string
                         "type": 'audio',
-                        "name": 'audio.ogg',
-                        "mime": audio_contentType
+                        "name": 'audio.wav',
+                        "mime": 'audio/webm'
                     }
                 ]
             },process.env.FLOW_INICIAL).then((response_audio) => {
