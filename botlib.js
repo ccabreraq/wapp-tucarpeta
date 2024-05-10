@@ -233,7 +233,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                     {
                         "data": data_audio, //base64 string
                         "type": 'audio',
-                        "name": 'audio.wav',
+                        "name": 'audio.ogg',
                         "mime": audio_contentType
                     }
                 ]
