@@ -11,11 +11,12 @@ const dotenv = require('dotenv').config()
 ////////////////// variables del bot //////////////////////////////
 const source = '573143285974'
 const botname = 'veseguro'
+const url_flowise = 'https://flowise-y3q2.onrender.com/api/v1/prediction/'
+var  idflow = '28e85d20-87ed-493d-8860-60241c9250e9'
 
 const url_clasifica = "https://semantic-router.onrender.com/semantic-router"
 
 const sessionId = 'c8'
-
 
 ///////////////////funciones//////////////////////////////
 
@@ -233,11 +234,17 @@ router.post('/modo_whatsapp_v3', function(req, res) {
       if (resp_men.payload.type ==='text') {      
       
         var vpregunta = resp_men.payload.payload.text
-        //query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-        query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-            cargarRespuesta(response.text,vcontextobj)
-        console.log(response);
-        });	 
+		
+		if (vpregunta.includes("**activa")) {
+			idflow = vpregunta.replace("**activa ", "");
+			cargarRespuesta('Cambie a workflow :'+idflow,vcontextobj)
+		} else {
+			//query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
+			query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},url_flowise+idflow).then((response) => {
+				cargarRespuesta(response.text,vcontextobj)
+			console.log(response);
+			});	
+		}		
 
 
       }  else if (resp_men.payload.type ==='audio') {  
@@ -270,7 +277,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                         "mime": 'audio/webm'
                     }
                 ]
-            },process.env.FLOW_INICIAL).then((response_audio) => {
+            },url_flowise+idflow).then((response_audio) => {
                 console.log(response_audio);
                 cargarRespuesta(response_audio.text,vcontextobj)
             });    
@@ -304,7 +311,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                         "mime": image_contentType
                     }
                 ]
-                },process.env.FLOW_INICIAL).then((response_image) => {
+                },url_flowise+idflow).then((response_image) => {
                 console.log(response_image);
                 cargarRespuesta(response_image.text,vcontextobj)
             });    
