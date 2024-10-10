@@ -376,7 +376,7 @@ router.post('/orquestador', function(req, res) {
 
 })
 
-router.get('/copilotkit', (req, res, next) => {
+router.post('/copilotkit', (req, res, next) => {
   const runtime = new CopilotRuntime();
   const handler = copilotRuntimeNodeHttpEndpoint({
     endpoint: '/copilotkit',
