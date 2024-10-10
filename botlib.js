@@ -7,6 +7,19 @@ var EventEmitter2 = require('eventemitter2');
 var emitter= new EventEmitter2();
 const dotenv = require('dotenv').config()
 
+var {
+  CopilotRuntime,
+  OpenAIAdapter,
+  copilotRuntimeNodeHttpEndpoint,
+} = require('@copilotkit/runtime');
+var OpenAI = require('openai');
+
+const cors = require('cors');
+
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const llmAdapter = new OpenAIAdapter({ openai });
+
 
 ////////////////// variables del bot //////////////////////////////
 const source = '573143285974'
@@ -366,7 +379,16 @@ router.post('/orquestador', function(req, res) {
 
 })
 
-
+router.get('/copilotkit', (req, res, next) => {
+  const runtime = new CopilotRuntime();
+  const handler = copilotRuntimeNodeHttpEndpoint({
+    endpoint: '/copilotkit',
+    runtime,
+    llmAdapter,
+  });
+ 
+  return handler(req, res, next);
+});
 
 
 //////////////////////////////////////////////////////////////
