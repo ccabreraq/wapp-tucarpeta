@@ -27,7 +27,19 @@ app.use(function(req, res, next) {
     });
 });
 
+const cors = require('cors');
+
+const app = express();
+const corsOptions ={
+   origin:'*', 
+ }
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
+
+
 app.use("/",router);
+
+
 
 
 app.listen(port, () => {
