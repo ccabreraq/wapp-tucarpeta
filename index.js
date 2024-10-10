@@ -29,7 +29,6 @@ app.use(function(req, res, next) {
 
 const cors = require('cors');
 
-const app = express();
 const corsOptions ={
    origin:'*', 
  }
