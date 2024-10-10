@@ -14,9 +14,6 @@ var {
 } = require('@copilotkit/runtime');
 var OpenAI = require('openai');
 
-const cors = require('cors');
-
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const llmAdapter = new OpenAIAdapter({ openai });
 
