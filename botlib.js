@@ -362,7 +362,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         fetchBlob(image_url)
 
 
-      }
+      //}
 
     }  else { 
        //console.log(resp_men)	
