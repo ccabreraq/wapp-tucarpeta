@@ -327,9 +327,39 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                 cargarRespuesta(response_image.text,vcontextobj)
             });    
         
-        }
+       }  else if (resp_men.payload.type ==='file') {
 
-        fetchBlob(image_url1)
+        let image_url = resp_men.payload.payload.url
+        let image_contentType = resp_men.payload.payload.contentType
+        let image_texto = resp_men.payload.payload.caption
+        let image_name = resp_men.payload.payload.name
+
+        //let image_url1 = image_url.replace("?download=false", "");
+
+        async function fetchBlob(url) {
+            const response = await fetch(url);
+            const blob1 = await response.arrayBuffer();
+            let data_image = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob1).toString("base64")}`;
+            console.log(data_image);
+
+            query_audio({
+                "question": image_texto,
+                "uploads": [
+                    {
+                        "data": data_image, //base64 string
+                        "type": 'file',
+                        "name": image_name,
+                        "mime": image_contentType
+                    }
+                ]
+                },url_flowise+idflow).then((response_image) => {
+                console.log(response_image);
+                cargarRespuesta(response_image.text,vcontextobj)
+            });    
+        
+       }
+
+        fetchBlob(image_url)
 
 
       }
