@@ -325,7 +325,11 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                 },url_flowise+idflow).then((response_image) => {
                 console.log(response_image);
                 cargarRespuesta(response_image.text,vcontextobj)
-            });    
+            }); 
+		}
+
+        fetchBlob(audio_url1)
+		
         
        }  else if (resp_men.payload.type ==='file') {
 
@@ -362,7 +366,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         fetchBlob(image_url)
 
 
-      //}
+      }
 
     }  else { 
        //console.log(resp_men)	
