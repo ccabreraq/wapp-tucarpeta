@@ -21,7 +21,8 @@ const llmAdapter = new OpenAIAdapter({ openai });
 ////////////////// variables del bot //////////////////////////////
 const source = '573143285974'
 const botname = 'veseguro'
-const url_flowise = 'https://pre.serviciosia.transfiriendo.com:8080/api/v1/prediction/'
+//const url_flowise = 'https://pre.serviciosia.transfiriendo.com:8080/api/v1/prediction/'
+const url_flowise = 'https://flowise-y3q2.onrender.com/api/v1/prediction/'
 var  idflow = '28e85d20-87ed-493d-8860-60241c9250e9'
 
 const url_clasifica = "https://semantic-router.onrender.com/semantic-router"
