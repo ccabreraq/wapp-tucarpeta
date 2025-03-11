@@ -328,42 +328,42 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             }); 
 		}
 
-        fetchBlob(audio_url1)
+        fetchBlob(image_url1)
 		
         
        }  else if (resp_men.payload.type ==='file') {
 
-        let image_url = resp_men.payload.payload.url
-        let image_contentType = resp_men.payload.payload.contentType
-        let image_texto = resp_men.payload.payload.caption
-        let image_name = resp_men.payload.payload.name
+        let file_url = resp_men.payload.payload.url
+        let file_contentType = resp_men.payload.payload.contentType
+        let file_texto = resp_men.payload.payload.caption
+        let file_name = resp_men.payload.payload.name
 
-        //let image_url1 = image_url.replace("?download=false", "");
+        //let file_url1 = file_url.replace("?download=false", "");
 
         async function fetchBlob(url) {
             const response = await fetch(url);
             const blob1 = await response.arrayBuffer();
-            let data_image = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob1).toString("base64")}`;
-            console.log(data_image);
+            let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob1).toString("base64")}`;
+            console.log(data_file);
 
             query_audio({
-                "question": 'dime de que trata el documento', //image_texto,
+                "question": 'dime de que trata el documento', //file_texto,
                 "uploads": [
                     {
-                        "data": data_image, //base64 string
+                        "data": data_file, //base64 string
                         "type": 'file:full',
-                        "name": image_name,
-                        "mime": image_contentType
+                        "name": file_name,
+                        "mime": file_contentType
                     }
                 ]
-                },url_flowise+idflow).then((response_image) => {
-                console.log(response_image);
-                cargarRespuesta(response_image.text,vcontextobj)
+                },url_flowise+idflow).then((response_file) => {
+                console.log(response_file);
+                cargarRespuesta(response_file.text,vcontextobj)
             });    
         
        }
 
-        fetchBlob(image_url)
+        fetchBlob(file_url)
 
 
       }
