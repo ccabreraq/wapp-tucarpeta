@@ -347,11 +347,11 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             console.log(data_image);
 
             query_audio({
-                "question": image_texto,
+                "question": 'dime de que trata el documento', //image_texto,
                 "uploads": [
                     {
                         "data": data_image, //base64 string
-                        "type": 'file',
+                        "type": 'file:full',
                         "name": image_name,
                         "mime": image_contentType
                     }
