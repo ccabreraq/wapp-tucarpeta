@@ -342,17 +342,17 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
         async function fetchBlob(url) {
             const response = await fetch(url);
-            const blob1 = await response.arrayBuffer();
-            let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob1).toString("base64")}`;
+            const blob2 = await response.arrayBuffer();
+            let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob2).toString("base64")}`;
             console.log(data_file);
 
             query_audio({
-                "question": 'dime de que trata el documento', //file_texto,
+                "question": 'dame un resumen del documento', //file_texto,
                 "uploads": [
                     {
                         "data": data_file, //base64 string
                         "type": 'file:full',
-                        "name": file_name,
+                        "name": 'flowise.pdf',
                         "mime": file_contentType
                     }
                 ]
