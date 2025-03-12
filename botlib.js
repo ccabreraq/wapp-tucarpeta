@@ -349,7 +349,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 			const formData = new FormData();
 			formData.append("files", Buffer.from(blob2));
 
-			const response = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+sessionId, {
+			const response = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+sessionId+"'", {
 				method: 'POST',
 				headers: {				  
 				  "Content-Type": "multipart/form-data"
