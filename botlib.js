@@ -251,7 +251,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 			cargarRespuesta('Cambie a workflow :'+idflow,vcontextobj)
 		} else {
 			//query({"question": vpregunta,"overrideConfig": {"sessionId": resp_men.payload.sender.phone,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},process.env.FLOW_INICIAL).then((response) => {
-			query({"question": vpregunta,"overrideConfig": {"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},url_flowise+idflow).then((response) => {
+			query({"question": vpregunta,"overrideConfig": {"sessionId":sessionId,"systemMessage":"You are a helpful AI assistant.  debes tener un trato amable y personalizado utilizando los datos personales. tienes que tener en tu contesto  mis  datos personales::  nombre: Carlos, email: ccabreraq@gmail.com, celular: 573204903664, dud: cccc,identificador 34567 debes usar estos datos cuando los necesites"}},url_flowise+idflow).then((response) => {
 				cargarRespuesta(response.text,vcontextobj)
 			console.log(response);
 			});	
@@ -347,12 +347,13 @@ router.post('/modo_whatsapp_v3', function(req, res) {
             console.log(data_file);
 
             query_audio({
-                "question": 'dame un resumen del documento', //file_texto,
+                "question": file_texto,
+				"chatId": sessionId,
                 "uploads": [
                     {
                         "data": data_file, //base64 string
                         "type": 'file:full',
-                        "name": 'flowise.pdf',
+                        "name": file_name,
                         "mime": file_contentType
                     }
                 ]
