@@ -343,7 +343,24 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         async function fetchBlob(url) {
             const response = await fetch(url);
             const blob2 = await response.arrayBuffer();
-            let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob2).toString("base64")}`;
+			
+			///////////////// convierte archivo en texto ///////////////////////////
+			
+			const formData = new FormData();
+			formData.append("files", Buffer.from(blob2));
+
+			const response = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+'cc2', {
+				method: 'POST',
+				headers: {				  
+				  "Content-Type": "multipart/form-data"
+				},
+				body: formData
+			});
+			let data_file = await response.json();
+			
+			////////////////////////////////////////////////////////////////////////
+			
+            //let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob2).toString("base64")}`;
             console.log(data_file);
 
             query_audio({
