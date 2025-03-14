@@ -351,9 +351,6 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 
 			const response_file1 = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+sessionId+"'", {
 				method: 'POST',
-				headers: {				  
-				  "Content-Type": "multipart/form-data"
-				},
 				body: formData
 			});
 			let data_file = await response_file1.json();
