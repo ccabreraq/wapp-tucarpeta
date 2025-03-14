@@ -343,12 +343,11 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         async function fetchBlob(url) {
             const response = await fetch(url);
             const blob2 = await response.arrayBuffer();
-			//let blob3 = new Blob([blob2])
-			let blob3 = Buffer.from(blob2)
+			let blob3 = new Blob([blob2])
 			///////////////// convierte archivo en texto ///////////////////////////
 			
 			const formData = new FormData();
-			formData.append("files", blob3,{filename:file_name,contentType:file_contentType});
+			formData.append("files", blob3,file_name);
 
 			const response_file1 = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+sessionId+"'", {
 				method: 'POST',
