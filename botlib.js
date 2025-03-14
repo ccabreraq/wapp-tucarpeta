@@ -353,7 +353,8 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 				method: 'POST',
 				body: formData
 			});
-			let data_file = await response_file1.json();
+			//let data_file = await response_file1.json();
+			let data_file = await response_file1.text();
 			
 			////////////////////////////////////////////////////////////////////////
 			
