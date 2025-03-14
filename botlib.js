@@ -343,7 +343,8 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         async function fetchBlob(url) {
             const response = await fetch(url);
             const blob2 = await response.arrayBuffer();
-			let blob3=new Blob([blob2])
+			//let blob3 = new Blob([blob2])
+			let blob3 = Buffer.from(blob2)
 			///////////////// convierte archivo en texto ///////////////////////////
 			
 			const formData = new FormData();
