@@ -367,7 +367,6 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 			  
 			  // 6. Procesar la respuesta
 			  const dataFile = await responseFile.text();
-			  setResult(dataFile);
 			  console.log(dataFile);
 			
             //console.log(data_file);
