@@ -341,32 +341,43 @@ router.post('/modo_whatsapp_v3', function(req, res) {
         //let file_url1 = file_url.replace("?download=false", "");
 
         async function fetchBlob(url) {
-            const response = await fetch(url);
-            const blob2 = await response.arrayBuffer();
-			let blob3 = new Blob([blob2])
-			///////////////// convierte archivo en texto ///////////////////////////
 			
-			const formData = new FormData();
-			formData.append("files", blob3,file_name);
-
-			const response_file1 = await fetch('https://flowise-y3q2.onrender.com/api/v1/attachments/'+idflow+'/'+sessionId+"'", {
+			
+			
+			try {
+			  // 1. Obtener el archivo como ArrayBuffer
+			  const response = await fetch(url);
+			  const arrayBuffer = await response.arrayBuffer();
+			  
+			  // 2. Convertir a Blob con el tipo MIME correcto
+			  const blob = new Blob([arrayBuffer], { type: file_contentType || 'application/octet-stream' });
+			  
+			  // 3. Crear el FormData correctamente
+			  const formData = new FormData();
+			  formData.append("files", blob, fileName);
+			  
+			  // 4. Corregir la URL (eliminando la comilla simple extra)
+			  const uploadUrl = `https://flowise-y3q2.onrender.com/api/v1/attachments/${idflow}/${sessionId}`;
+			  
+			  // 5. Enviar la solicitud
+			  const responseFile = await fetch(uploadUrl, {
 				method: 'POST',
 				body: formData
-			});
-			//let data_file = await response_file1.json();
-			let data_file = await response_file1.text();
+			  });
+			  
+			  // 6. Procesar la respuesta
+			  const dataFile = await responseFile.text();
+			  setResult(dataFile);
+			  console.log(dataFile);
 			
-			////////////////////////////////////////////////////////////////////////
-			
-            //let data_file = await `data:${response.headers.get("content-type")};base64,${Buffer.from(blob2).toString("base64")}`;
-            console.log(data_file);
+            //console.log(data_file);
 
             query_audio({
                 "question": file_texto,
 				"chatId": sessionId,
                 "uploads": [
                     {
-                        "data": data_file, //base64 string
+                        "data": dataFile, //base64 string
                         "type": 'file:full',
                         "name": file_name,
                         "mime": file_contentType
@@ -376,6 +387,12 @@ router.post('/modo_whatsapp_v3', function(req, res) {
                 console.log(response_file);
                 cargarRespuesta(response_file.text,vcontextobj)
             });    
+			
+			} catch (error) {
+			  console.error("Error en fetchBlob:", error);
+			  throw error;
+			}			
+			
         
        }
 
