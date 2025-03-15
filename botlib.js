@@ -354,7 +354,7 @@ router.post('/modo_whatsapp_v3', function(req, res) {
 			  
 			  // 3. Crear el FormData correctamente
 			  const formData = new FormData();
-			  formData.append("files", blob, fileName);
+			  formData.append("files", blob, file_name);
 			  
 			  // 4. Corregir la URL (eliminando la comilla simple extra)
 			  const uploadUrl = `https://flowise-y3q2.onrender.com/api/v1/attachments/${idflow}/${sessionId}`;
